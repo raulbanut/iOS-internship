@@ -2,6 +2,12 @@ import UIKit
 
 // Closures = lambdas
 
+let vw = UIView()
+
+UIView.animate(withDuration: 0.5, animations: {
+    vw.alpha = 0
+})
+
 /*
  Closure Expression Syntax
  { (parameters) -> return type in
@@ -123,3 +129,5 @@ func serve(customer customerProvider: () -> String) {
 }
 serve(customer: { customersInLine.remove(at: 0) } )
 // Prints "Now serving Alex!"
+
+
