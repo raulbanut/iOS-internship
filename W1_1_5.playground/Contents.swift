@@ -11,16 +11,16 @@ UIView.animate(withDuration: 0.5, animations: {
 /*
  Closure Expression Syntax
  { (parameters) -> return type in
-     statements
+ statements
  }
  
  reversedNames = names.sorted(by: { (s1: String, s2: String) -> Bool in
-     return s1 > s2
+ return s1 > s2
  })
  
  Inferring Type From Context
  reversedNames = names.sorted(by:
-    { s1, s2 in return s1 > s2 })
+ { s1, s2 in return s1 > s2 })
  */
 
 let names = ["Chris", "Alex", "Andrei", "Banut", "Zara", "Florin", "George"]
