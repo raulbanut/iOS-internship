@@ -80,10 +80,31 @@ struct ContentView: View {
     }
     
     var flagView: some View {
-        Text("Aici vine steagul")
-            .frame(maxWidth: 212, maxHeight: 125)
-            .background(grayColor)
-            .frame(maxWidth: .infinity, maxHeight: 250)
+        VStack {
+            
+            
+            VStack(spacing: 0) {
+                Color.blue
+                HStack{
+                Color.green
+//                Picker()
+                HStack{
+                Color.pink
+                
+                VStack{
+                Color.yellow
+//                    .frame(width: 100, height: 100)
+                Color.gray
+//                    .frame(width: 100, height: 100)
+                
+            }}}
+                Color.purple
+            }
+            Text("Aici vine steagul")
+                .frame(maxWidth: 212, maxHeight: 125)
+                .background(grayColor)
+                .frame(maxWidth: .infinity, maxHeight: 250)
+        }
     }
     
     var firstComponent: some View {
