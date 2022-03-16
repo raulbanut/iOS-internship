@@ -18,7 +18,7 @@ struct ContentView: View {
                 }
                 .frame(width: componentWidth, height: componentHeight + 50)
                 .background(.white)
-                .cornerRadius(cornerRadius)
+                .cornerRadius(cornerRadiusCustom)
                 
                 if isPressed {
                     HStack {
@@ -30,7 +30,7 @@ struct ContentView: View {
                     }
                     .frame(width: componentWidth, height: componentHeight)
                     .background(.white)
-                    .cornerRadius(cornerRadius)
+                    .cornerRadius(cornerRadiusCustom)
                     
                     HStack {
                         Button {
@@ -41,7 +41,7 @@ struct ContentView: View {
                     }
                     .frame(width: componentWidth, height: componentHeight)
                     .background(.white)
-                    .cornerRadius(cornerRadius)
+                    .cornerRadius(cornerRadiusCustom)
                 }
                 else {
                     ForEach (0..<2) { _ in
@@ -55,19 +55,27 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    @State private var isPressed = false;
+    @State private var isPressed = false
+    @State private var hStack = true
     
-    let grayColor = Color(red: 0.8666666666666667, green: 0.8823529411764706, blue: 0.8784313725490196)
-    let blueColor = Color(red: 0.12941176470588237, green: 0.5725490196078431, blue: 0.7137254901960784)
-    let greenColor = Color(red: 0.438, green: 0.754, blue: 0.331)
-    
-    let cornerRadius = CGFloat(15)
-    let componentWidth = CGFloat(370)
-    let componentHeight = CGFloat(60)
+    @State private var horizStack = HStack {
+        HStack {
+            Color.white
+        }
+        Color.white
+    }
     
     func press() {
         isPressed = !isPressed
         print(isPressed)
+        horizStack =
+        HStack {
+            HStack {
+                Color.orange
+            }
+            Color.brown
+        }
+        
     }
     
     func buttonText(_ text: String, _ color: Color) -> some View {
@@ -79,32 +87,28 @@ struct ContentView: View {
             .background(color)
     }
     
+    //        func recursive() -> HStack {
+    //
+    //        }
+    
     var flagView: some View {
-        VStack {
-            
-            
-            VStack(spacing: 0) {
-                Color.blue
-                HStack{
+        VStack(spacing: 0) {
+            Color.blue
+            HStack(spacing: 0) {
                 Color.green
-//                Picker()
-                HStack{
-                Color.pink
-                
-                VStack{
-                Color.yellow
-//                    .frame(width: 100, height: 100)
-                Color.gray
-//                    .frame(width: 100, height: 100)
-                
-            }}}
-                Color.purple
+                HStack(spacing: 0) {
+                    Color.pink
+                    horizStack
+                    VStack(spacing: 0) {
+                        Color.yellow
+                        Color.gray
+                    }
+                }
             }
-            Text("Aici vine steagul")
-                .frame(maxWidth: 212, maxHeight: 125)
-                .background(grayColor)
-                .frame(maxWidth: .infinity, maxHeight: 250)
+            Color.purple
         }
+        .frame(maxWidth: 212, maxHeight: 125)
+        .frame(maxWidth: .infinity, maxHeight: 250)
     }
     
     var firstComponent: some View {
@@ -124,22 +128,6 @@ struct ContentView: View {
             .frame(width: 200, height: 25)
     }
     
-    var hideButton: some View {
-        HStack {
-        }
-        .frame(width: componentWidth, height: componentHeight)
-        .background(grayColor)
-    }
-    
-    func addButton(_ name: String) -> some View {
-        Button {
-            press()
-        } label: {
-            addImage(name)
-        }
-        .frame(width: 150.0, height: 50.0)
-    }
-    
     var firstComponentView: some View {
         HStack {
             addButton("H-Split")
@@ -149,6 +137,15 @@ struct ContentView: View {
         .frame(width: 240, height: 40, alignment: .center)
         .padding(16)
         .background(.white)
+    }
+    
+    func addButton(_ name: String) -> some View {
+        Button {
+            press()
+        } label: {
+            addImage(name)
+        }
+        .frame(width: 150.0, height: 50.0)
     }
     
     func addVLine() -> some View {
@@ -168,10 +165,19 @@ struct ContentView: View {
             .foregroundColor(blueColor)
             .frame(width: 30, height: 30)
     }
+    
+    var hideButton: some View {
+        HStack {
+        }
+        .frame(width: componentWidth, height: componentHeight)
+        .background(grayColor)
+    }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+
