@@ -4,176 +4,105 @@
 //
 //  Created by Banut Raul on 14.03.2022.
 //
-
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack(spacing: 0) {
-            flagView
-            
-            VStack {
-                HStack {
-                    firstComponent
-                }
-                .frame(width: componentWidth, height: componentHeight + 50)
-                .background(.white)
-                .cornerRadius(cornerRadiusCustom)
-                
-                if isPressed {
-                    HStack {
-                        Button {
-                        } label: {
-                            buttonText("Add Stripe", blueColor)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                    .frame(width: componentWidth, height: componentHeight)
-                    .background(.white)
-                    .cornerRadius(cornerRadiusCustom)
-                    
-                    HStack {
-                        Button {
-                        } label: {
-                            buttonText("Commit Section", greenColor)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                    .frame(width: componentWidth, height: componentHeight)
-                    .background(.white)
-                    .cornerRadius(cornerRadiusCustom)
-                }
-                else {
-                    ForEach (0..<2) { _ in
-                        hideButton
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: 800)
-            .background(grayColor)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        let root = createTree()
+        root.generateFlag().frame(width: 300, height: 300)
     }
     
-    @State private var isPressed = false
-    @State private var hStack = true
-    
-    @State private var horizStack = HStack {
-        HStack {
-            Color.white
-        }
-        Color.white
-    }
-    
-    func press() {
-        isPressed = !isPressed
-        print(isPressed)
-        horizStack =
-        HStack {
-            HStack {
-                Color.orange
-            }
-            Color.brown
+    struct FlagViewModel {
+        enum ViewType {
+            case horizontal
+            case vertical
         }
         
+        let type: ViewType
+        var color: Color = .gray
     }
     
-    func buttonText(_ text: String, _ color: Color) -> some View {
-        Text(text)
-            .font(.title3)
-            .fontWeight(.bold)
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(color)
-    }
-    
-    //        func recursive() -> HStack {
-    //
-    //        }
-    
-    var flagView: some View {
-        VStack(spacing: 0) {
-            Color.blue
-            HStack(spacing: 0) {
-                Color.green
-                HStack(spacing: 0) {
-                    Color.pink
-                    horizStack
-                    VStack(spacing: 0) {
-                        Color.yellow
-                        Color.gray
-                    }
+    class Node: CustomStringConvertible, Equatable {
+        static func == (lhs: Node, rhs: Node) -> Bool {
+            return lhs.id == rhs.id
+        }
+        
+        var id: UUID = UUID()
+        let value: FlagViewModel
+        var children: [Node]
+        weak var parent: Node?
+        
+        init(value: FlagViewModel, children: [Node] = []) {
+            self.value = value
+            self.children = children
+            children.forEach { child in
+                child.parent?.children.removeAll(where: {
+                    $0.id == child.id
+                })
+                child.parent = self
+            }
+        }
+        
+        var isLeaf: Bool {
+            return children.isEmpty
+        }
+        
+        var isRoot : Bool {
+            return parent == nil
+        }
+        
+        func generateFlag() -> some View {
+            if isLeaf {
+                return AnyView(value.color)
+            }
+            else {
+                switch value.type {
+                case .horizontal:
+                    return AnyView(
+                        HStack(spacing: 0) {
+                        ForEach (children, id:\.id) { child in
+                            child.generateFlag()
+                        }
+                    })
+                case .vertical:
+                    return AnyView(
+                        VStack(spacing: 0) {
+                        ForEach (children, id:\.id) { child in
+                            child.generateFlag()
+                        }
+                    })
                 }
             }
-            Color.purple
         }
-        .frame(maxWidth: 212, maxHeight: 125)
-        .frame(maxWidth: .infinity, maxHeight: 250)
-    }
-    
-    var firstComponent: some View {
-        VStack {
-            firstComponentText
-            firstComponentView
-        }
-        .padding()
-    }
-    
-    var firstComponentText: some View {
-        Text("ADD SUBSECTION")
-            .fontWeight(.heavy)
-            .font(.system(size: 11))
-            .foregroundColor(blueColor)
-            .padding()
-            .frame(width: 200, height: 25)
-    }
-    
-    var firstComponentView: some View {
-        HStack {
-            addButton("H-Split")
-            addVLine()
-            addButton("V-Split")
-        }
-        .frame(width: 240, height: 40, alignment: .center)
-        .padding(16)
-        .background(.white)
-    }
-    
-    func addButton(_ name: String) -> some View {
-        Button {
-            press()
-        } label: {
-            addImage(name)
-        }
-        .frame(width: 150.0, height: 50.0)
-    }
-    
-    func addVLine() -> some View {
-        Group {
-            Spacer()
-            Color.gray
-                .frame(maxHeight: .infinity)
-                .frame(width: 1)
-            Spacer()
+        
+        var description: String {
+            return "\(children.count) : \(children)"
         }
     }
     
-    func addImage(_ name: String) -> some View {
-        Image(name)
-            .resizable()
-            .renderingMode(.original)
-            .foregroundColor(blueColor)
-            .frame(width: 30, height: 30)
-    }
-    
-    var hideButton: some View {
-        HStack {
-        }
-        .frame(width: componentWidth, height: componentHeight)
-        .background(grayColor)
-    }
-}
+    func createTree() -> Node {
+        let node12 = Node(value: FlagViewModel(type: .vertical, color: .indigo))
+        let node11 = Node(value: FlagViewModel(type: .vertical, color: .blue))
+        let node10 = Node(value: FlagViewModel(type: .vertical, color: .pink))
+        let node9 = Node(value: FlagViewModel(type: .vertical, color: .green))
+        let node8 = Node(value: FlagViewModel(type: .vertical, color: .brown))
 
+        let node7 = Node(value: FlagViewModel(type: .vertical, color: .orange))
+        let node6 = Node(value: FlagViewModel(type: .vertical, color: .yellow))
+        let node5 = Node(value: FlagViewModel(type: .vertical, color: .orange), children: [node11, node12])
+        let node4 = Node(value: FlagViewModel(type: .vertical, color: .orange), children: [node10])
+        let node3 = Node(value: FlagViewModel(type: .vertical, color: .orange), children: [node8, node9])
+
+        let node2 = Node(value: FlagViewModel(type: .vertical, color: .orange), children: [node5, node6, node7])
+        let node1 = Node(value: FlagViewModel(type: .horizontal, color: .orange), children: [node3, node4])
+
+        let root = Node(value: FlagViewModel(type: .vertical, color: .orange), children: [node1, node2])
+        
+        return root
+    }
+    
+    
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
