@@ -20,7 +20,7 @@ struct FlagSectionView: View {
     }
     
     @ViewBuilder
-    func stackSectionView(stack: FlagStackSection) -> some View {
+    private func stackSectionView(stack: FlagStackSection) -> some View {
         switch stack.orientation {
             case .vertical:
                 VStack {
@@ -33,7 +33,7 @@ struct FlagSectionView: View {
         }
     }
     
-    func foo(stack: FlagStackSection) -> some View {
+    private func foo(stack: FlagStackSection) -> some View {
         ForEach(0..<stack.subsections.count, id:\.self) { i in
             FlagSectionView(section: stack.subsections[i])
         }

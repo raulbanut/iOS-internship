@@ -17,3 +17,13 @@ let greenColor = Color(red: 0.438, green: 0.754, blue: 0.331)
 let cornerRadiusCustom = CGFloat(15)
 let componentWidth = CGFloat(370)
 let componentHeight = CGFloat(60)
+
+var vLine: some View {
+    Group {
+        Spacer()
+        Color.gray
+            .frame(maxHeight: .infinity)
+            .frame(width: 1)
+        Spacer()
+    }
+}
