@@ -11,7 +11,7 @@ class Section {
     var parent: FlagSectionView?
 }
 
-class FlagStackSection: Section {
+class FlagStackSection: Section, ObservableObject {
     enum StackType {
         case horizontal
         case vertical

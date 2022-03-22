@@ -7,6 +7,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var flagRoot = FlagStackSection(orientation: .horizontal, subsections: [])
+    
+    private var currentSection: Section?
+    
     var body: some View {
         VStack(spacing: 0) {
             flagView
@@ -17,9 +21,9 @@ struct ContentView: View {
                     .cornerRadius(cornerRadiusCustom)
                     .padding(.top)
                 
-                addStripeCta
-                addCommitCta
-        
+                addStripeButton
+                commitButton
+                
                 Spacer()
             }
             .frame(maxWidth: .infinity)
@@ -27,14 +31,6 @@ struct ContentView: View {
             .padding(.top, 40)
         }
         .frame(maxWidth: .infinity)
-    }
-    
-    @State private var isPressed = false
-    @State private var hStack = true
-    
-    func press() {
-        isPressed = !isPressed
-        print(isPressed)
     }
     
     func buttonText(_ text: String, _ color: Color) -> some View {
@@ -48,22 +44,25 @@ struct ContentView: View {
     }
     
     var flagView: some View {
-        Color.purple
+//        Color.purple
+        FlagSectionView(section: flagRoot)
             .frame(width: 200, height: 125)
     }
     
     var firstComponent: some View {
         VStack {
-            firstComponentText
-            firstComponentView
+        firstComponentText
+                .padding(.top, 8)
+        firstComponentView
+                .padding(8)
         }
-        .padding()
     }
     
-    private var addStripeCta(_ name: String) -> some View {
+    func roundedCornersButton(_ name: String, _ color: Color, action: @escaping () -> Void) -> some View {
         Button {
+            action()
         } label: {
-            buttonText("Add Stripe", blueColor)
+            buttonText(name, color)
         }
         .frame(maxWidth: .infinity)
         .background(.white)
@@ -71,16 +70,17 @@ struct ContentView: View {
         .padding(.horizontal, 20)
         .buttonStyle(.plain)
     }
-    
-    private var addCommitCta: some View {
-        Button {
-        } label: {
-            buttonText("Commit Section", greenColor)
+
+    var addStripeButton: some View {
+        roundedCornersButton("Add Stripe", greenColor) {
+            flagRoot.subsections.append(FlagColorSection(color: .yellow))
         }
-        .background(.white)
-        .cornerRadius(cornerRadiusCustom)
-        .padding(.horizontal, 20)
-        .buttonStyle(.plain)
+    }
+    
+    var commitButton: some View {
+        roundedCornersButton("Commit", blueColor) {
+            
+        }
     }
     
     var firstComponentText: some View {
@@ -94,32 +94,29 @@ struct ContentView: View {
     
     var firstComponentView: some View {
         HStack {
-            addButton("H-Split")
-            addVLine()
-            addButton("V-Split")
+            horizontalSectionButton()
+            vLine
+            verticalSectionButton()
         }
         .frame(width: 240, height: 40, alignment: .center)
         .padding(16)
         .background(.white)
     }
     
-    func addButton(_ name: String) -> some View {
+    func horizontalSectionButton() -> some View {
         Button {
-            press()
         } label: {
-            addImage(name)
+            addImage("H-Split")
         }
         .frame(width: 150.0, height: 50.0)
     }
     
-    func addVLine() -> some View {
-        Group {
-            Spacer()
-            Color.gray
-                .frame(maxHeight: .infinity)
-                .frame(width: 1)
-            Spacer()
+    func verticalSectionButton() -> some View {
+        Button {
+        } label: {
+            addImage("V-Split")
         }
+        .frame(width: 150.0, height: 50.0)
     }
     
     func addImage(_ name: String) -> some View {
@@ -128,13 +125,6 @@ struct ContentView: View {
             .renderingMode(.original)
             .foregroundColor(blueColor)
             .frame(width: 30, height: 30)
-    }
-    
-    var hideButton: some View {
-        HStack {
-        }
-        .frame(width: componentWidth, height: componentHeight)
-        .background(grayColor)
     }
 }
 
