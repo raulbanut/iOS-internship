@@ -23,11 +23,11 @@ struct FlagSectionView: View {
     private func stackSectionView(stack: FlagStackSection) -> some View {
         switch stack.orientation {
             case .vertical:
-                VStack {
+            VStack(spacing: 0) {
                     foo(stack: stack)
                 }
             case .horizontal:
-                HStack {
+            HStack(spacing: 0) {
                     foo(stack: stack)
                 }
         }

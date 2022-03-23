@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var alertIsVisible: Bool = false
-    @State private var sliderValue: Double = 50.0
+    @State private var alertIsVisible = false
+    @State private var sliderValue = 50.0
+    @State private var game = Game()
     
     var body: some View {
         VStack {
@@ -20,27 +21,33 @@ struct ContentView: View {
                 .multilineTextAlignment(.center)
                 .lineSpacing(4.0)
                 .font(.footnote)
-            Text("89")
+            Text("\(game.target)")
                 .kerning(-1.0)
                 .font(.largeTitle)
                 .fontWeight(.black)
             HStack{
                 Text("1")
                     .bold()
-                Slider(value: self.$sliderValue, in: 1.0...100.0)
+                Slider(value: $sliderValue, in: 1.0...100.0)
                 Text("100")
                     .bold()
             }
             
             Button {
-                print("Am apasat butonul")
-                self.alertIsVisible = true
+                //                print("Am apasat butonul")
+                alertIsVisible = true
             } label: {
                 Text("Hit me")
+                    .font(.title3)
+                    .bold()
             }
+            .padding(20.0)
+            .background(.blue)
+            .foregroundColor(.white)
+            .cornerRadius(21.0)
             .alert(isPresented: $alertIsVisible) {
-                let roundedValue: Int = Int(self.sliderValue.rounded())
-                return Alert(title: Text("Hello There!"), message: Text("This slider's value is \(roundedValue)."), dismissButton: .default(Text("Awesome")))
+                let roundedValue = Int(sliderValue.rounded())
+                return Alert(title: Text("Hello There!"), message: Text("This slider's value is \(roundedValue).\n" + "You scored \(game.points(sliderValue: roundedValue))"), dismissButton: .default(Text("Awesome")))
             }
         }
     }

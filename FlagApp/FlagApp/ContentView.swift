@@ -7,13 +7,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var flagRoot = FlagStackSection(orientation: .horizontal, subsections: [])
+    //    @StateObject private var flagRoot = FlagStackSection(orientation: .horizontal, subsections: [])
+    
+    @StateObject private var flag = FlagViewModel()
+    @State private var bgColor = Color.red
     
     private var currentSection: Section?
     
     var body: some View {
         VStack(spacing: 0) {
-            flagView
+            flag.createFlag()
             
             VStack {
                 firstComponent
@@ -23,6 +26,7 @@ struct ContentView: View {
                 
                 addStripeButton
                 commitButton
+                colorPickerButton
                 
                 Spacer()
             }
@@ -44,16 +48,15 @@ struct ContentView: View {
     }
     
     var flagView: some View {
-//        Color.purple
-        FlagSectionView(section: flagRoot)
+        return FlagSectionView(section: flag.root)
             .frame(width: 200, height: 125)
     }
     
     var firstComponent: some View {
         VStack {
-        firstComponentText
+            firstComponentText
                 .padding(.top, 8)
-        firstComponentView
+            firstComponentView
                 .padding(8)
         }
     }
@@ -70,16 +73,26 @@ struct ContentView: View {
         .padding(.horizontal, 20)
         .buttonStyle(.plain)
     }
-
+    
+    var colorPickerButton: some View {
+        ColorPicker("Pick color", selection: $bgColor)
+            .padding()
+            .frame(width: 150)
+            .background(.white)
+            .cornerRadius(cornerRadiusCustom)
+            .buttonStyle(.plain)
+    }
+    
     var addStripeButton: some View {
         roundedCornersButton("Add Stripe", greenColor) {
-            flagRoot.subsections.append(FlagColorSection(color: .yellow))
+            flag.addStripe(color: bgColor)
         }
     }
     
     var commitButton: some View {
         roundedCornersButton("Commit", blueColor) {
-            
+            flag.commit()
+            print("Am ajuns aici")
         }
     }
     
@@ -105,6 +118,7 @@ struct ContentView: View {
     
     func horizontalSectionButton() -> some View {
         Button {
+            flag.addSubsection(orientation: .horizontal)
         } label: {
             addImage("H-Split")
         }
@@ -113,6 +127,7 @@ struct ContentView: View {
     
     func verticalSectionButton() -> some View {
         Button {
+            flag.addSubsection(orientation: .vertical)
         } label: {
             addImage("V-Split")
         }

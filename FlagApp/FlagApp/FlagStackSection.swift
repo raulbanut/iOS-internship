@@ -11,16 +11,17 @@ class Section {
     var parent: FlagSectionView?
 }
 
+enum Orientation {
+    case horizontal
+    case vertical
+}
+
 class FlagStackSection: Section, ObservableObject {
-    enum StackType {
-        case horizontal
-        case vertical
-    }
     
-    var orientation: StackType = .vertical
-    var subsections: [Section] = []
+    var orientation: Orientation = .vertical
+    @Published var subsections: [Section] = []
     
-    init(orientation: StackType, subsections: [Section]) {
+    init(orientation: Orientation, subsections: [Section]) {
         self.orientation = orientation
         self.subsections = subsections
     }

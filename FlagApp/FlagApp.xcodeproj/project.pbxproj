@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		245A522127EA4F9F0077F748 /* FlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245A522027EA4F9F0077F748 /* FlagViewModel.swift */; };
 		24B2A74927DFC04E0096AECF /* FlagAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2A74827DFC04E0096AECF /* FlagAppApp.swift */; };
 		24B2A74B27DFC04E0096AECF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2A74A27DFC04E0096AECF /* ContentView.swift */; };
 		24B2A74D27DFC0500096AECF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24B2A74C27DFC0500096AECF /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		245A522027EA4F9F0077F748 /* FlagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagViewModel.swift; sourceTree = "<group>"; };
 		24B2A74527DFC04E0096AECF /* FlagApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlagApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24B2A74827DFC04E0096AECF /* FlagAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagAppApp.swift; sourceTree = "<group>"; };
 		24B2A74A27DFC04E0096AECF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			children = (
 				24B2A74827DFC04E0096AECF /* FlagAppApp.swift */,
 				24B2A74A27DFC04E0096AECF /* ContentView.swift */,
+				245A522027EA4F9F0077F748 /* FlagViewModel.swift */,
 				24E9881927E8D8A0001DD992 /* FlagSectionView.swift */,
 				24E9881527E8D6A2001DD992 /* FlagColorSection.swift */,
 				24E9881727E8D6E6001DD992 /* FlagStackSection.swift */,
@@ -154,6 +157,7 @@
 				24E3FB9627E1FAAC0070CFAD /* Essentials.swift in Sources */,
 				24E9881827E8D6E6001DD992 /* FlagStackSection.swift in Sources */,
 				24B2A74927DFC04E0096AECF /* FlagAppApp.swift in Sources */,
+				245A522127EA4F9F0077F748 /* FlagViewModel.swift in Sources */,
 				24E9881627E8D6A2001DD992 /* FlagColorSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +289,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FlagApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 37ACV43AZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -313,6 +318,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"FlagApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 37ACV43AZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
