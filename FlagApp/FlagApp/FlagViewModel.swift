@@ -9,37 +9,70 @@ import Foundation
 import SwiftUI
 
 class FlagViewModel: ObservableObject {
-    var currentSection = FlagStackSection(orientation: .vertical, subsections: [])
-    var root = FlagStackSection(orientation: .vertical, subsections: [])
+
+    var root: Section?
+    var currentSection: Section?
+    
+    init() {
+        self.currentSection = root
+    }
+    
+    func displayBorder(value: Bool) {
+        currentSection?.isToggled = value
+        self.objectWillChange.send()
+    }
     
     func addSubsection(orientation: Orientation) {
-//        FlagStackSection(orientation: orientation, subsections: [])
-        currentSection.orientation = orientation
-        print("addSubsection - \(orientation)")
-        self.objectWillChange.send()
+        let newStackSection = FlagStackSection(orientation: orientation, subsections: [])
+        addSection(newStackSection)
     }
     
     func addStripe(color: Color) {
-        currentSection.subsections.append(FlagColorSection(color: color))
-        print("addStripe")
-        print("currentSection = \(currentSection.subsections)")
-        self.objectWillChange.send()
+        let newColorSection = FlagColorSection(color: color)
+        addSection(newColorSection)
+    }
+    
+    func addSection(_ section: Section) {
+        if let currentStackSection = currentSection as? FlagStackSection { // check if the currentSection is a Stack
+            currentStackSection.subsections.append(section)
+            section.parent = currentStackSection
+            if let stackSection = section as? FlagStackSection { // check if the section we are adding is a Stack
+                currentStackSection.isBordered = false
+                stackSection.isBordered = true
+                currentSection = stackSection
+            }
+            self.objectWillChange.send()
+        } else if let _ = currentSection as? FlagColorSection { // we can not add sections to a color
+            print("Can not add new section to a color section!")
+        } else { // we have no current section and no root so we set them
+            section.isBordered = true
+            root = section
+            currentSection = root
+            self.objectWillChange.send()
+        }
     }
     
     func commit() {
-        root.subsections.append(currentSection)
-        currentSection = FlagStackSection(orientation: .vertical, subsections: [])
-        print("commit")
+        currentSection?.isBordered = false
+        currentSection = currentSection?.parent ?? root
+        currentSection?.isBordered = true
         self.objectWillChange.send()
     }
-    
-    func createFlag() -> some View {
-        print("ajung aici")
-        var flag = FlagSectionView(section: FlagStackSection(orientation: currentSection.orientation, subsections: currentSection.subsections))
-        if !root.subsections.isEmpty {
-            flag = FlagSectionView(section: FlagStackSection(orientation: root.orientation, subsections: root.subsections))
+}
+
+extension View {
+    func snapshot() -> UIImage {
+        let controller = UIHostingController(rootView: self)
+        let view = controller.view
+
+        let targetSize = controller.view.intrinsicContentSize
+        view?.bounds = CGRect(origin: .zero, size: targetSize)
+        view?.backgroundColor = .clear
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+
+        return renderer.image { _ in
+            view?.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
         }
-        return flag
-            .frame(width: 200, height: 125)
     }
 }

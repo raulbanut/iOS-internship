@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		240EB86127EC7A7500B1F7EB /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240EB86027EC7A7400B1F7EB /* ImageSaver.swift */; };
 		245A522127EA4F9F0077F748 /* FlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245A522027EA4F9F0077F748 /* FlagViewModel.swift */; };
 		24B2A74927DFC04E0096AECF /* FlagAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2A74827DFC04E0096AECF /* FlagAppApp.swift */; };
 		24B2A74B27DFC04E0096AECF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B2A74A27DFC04E0096AECF /* ContentView.swift */; };
@@ -15,10 +16,12 @@
 		24E3FB9627E1FAAC0070CFAD /* Essentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E3FB9527E1FAAC0070CFAD /* Essentials.swift */; };
 		24E9881627E8D6A2001DD992 /* FlagColorSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E9881527E8D6A2001DD992 /* FlagColorSection.swift */; };
 		24E9881827E8D6E6001DD992 /* FlagStackSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E9881727E8D6E6001DD992 /* FlagStackSection.swift */; };
-		24E9881A27E8D8A0001DD992 /* FlagSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E9881927E8D8A0001DD992 /* FlagSectionView.swift */; };
+		24E9881A27E8D8A0001DD992 /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E9881927E8D8A0001DD992 /* FlagView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		240EB85F27EC6BC200B1F7EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		240EB86027EC7A7400B1F7EB /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		245A522027EA4F9F0077F748 /* FlagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagViewModel.swift; sourceTree = "<group>"; };
 		24B2A74527DFC04E0096AECF /* FlagApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlagApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24B2A74827DFC04E0096AECF /* FlagAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagAppApp.swift; sourceTree = "<group>"; };
@@ -28,7 +31,7 @@
 		24E3FB9527E1FAAC0070CFAD /* Essentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Essentials.swift; sourceTree = "<group>"; };
 		24E9881527E8D6A2001DD992 /* FlagColorSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagColorSection.swift; sourceTree = "<group>"; };
 		24E9881727E8D6E6001DD992 /* FlagStackSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagStackSection.swift; sourceTree = "<group>"; };
-		24E9881927E8D8A0001DD992 /* FlagSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagSectionView.swift; sourceTree = "<group>"; };
+		24E9881927E8D8A0001DD992 /* FlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,10 +64,12 @@
 		24B2A74727DFC04E0096AECF /* FlagApp */ = {
 			isa = PBXGroup;
 			children = (
+				240EB85F27EC6BC200B1F7EB /* Info.plist */,
 				24B2A74827DFC04E0096AECF /* FlagAppApp.swift */,
 				24B2A74A27DFC04E0096AECF /* ContentView.swift */,
+				240EB86027EC7A7400B1F7EB /* ImageSaver.swift */,
 				245A522027EA4F9F0077F748 /* FlagViewModel.swift */,
-				24E9881927E8D8A0001DD992 /* FlagSectionView.swift */,
+				24E9881927E8D8A0001DD992 /* FlagView.swift */,
 				24E9881527E8D6A2001DD992 /* FlagColorSection.swift */,
 				24E9881727E8D6E6001DD992 /* FlagStackSection.swift */,
 				24E3FB9527E1FAAC0070CFAD /* Essentials.swift */,
@@ -152,13 +157,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24E9881A27E8D8A0001DD992 /* FlagSectionView.swift in Sources */,
+				24E9881A27E8D8A0001DD992 /* FlagView.swift in Sources */,
 				24B2A74B27DFC04E0096AECF /* ContentView.swift in Sources */,
 				24E3FB9627E1FAAC0070CFAD /* Essentials.swift in Sources */,
 				24E9881827E8D6E6001DD992 /* FlagStackSection.swift in Sources */,
 				24B2A74927DFC04E0096AECF /* FlagAppApp.swift in Sources */,
 				245A522127EA4F9F0077F748 /* FlagViewModel.swift in Sources */,
 				24E9881627E8D6A2001DD992 /* FlagColorSection.swift in Sources */,
+				240EB86127EC7A7500B1F7EB /* ImageSaver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +298,8 @@
 				DEVELOPMENT_TEAM = 37ACV43AZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlagApp/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to save your flag";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -321,6 +329,8 @@
 				DEVELOPMENT_TEAM = 37ACV43AZV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlagApp/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to save your flag";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -7,8 +7,10 @@
 
 import Foundation
 
-class Section {
-    var parent: FlagSectionView?
+class Section: ObservableObject {
+    var parent: FlagStackSection?
+    @Published var isBordered = false
+    @Published var isToggled = false
 }
 
 enum Orientation {
@@ -16,7 +18,7 @@ enum Orientation {
     case vertical
 }
 
-class FlagStackSection: Section, ObservableObject {
+class FlagStackSection: Section {
     
     var orientation: Orientation = .vertical
     @Published var subsections: [Section] = []

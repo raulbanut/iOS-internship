@@ -7,16 +7,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    //    @StateObject private var flagRoot = FlagStackSection(orientation: .horizontal, subsections: [])
     
     @StateObject private var flag = FlagViewModel()
-    @State private var bgColor = Color.red
+    @ObservedObject var imageSaver = ImageSaver()
+    @State private var bgColor = Color.yellow
+    @State private var showBorder = true
     
     private var currentSection: Section?
     
     var body: some View {
         VStack(spacing: 0) {
-            flag.createFlag()
+            flagView
             
             VStack {
                 firstComponent
@@ -27,11 +28,17 @@ struct ContentView: View {
                 addStripeButton
                 commitButton
                 colorPickerButton
+                saveImageButton
+                
+                toggleButton
+                    .onChange(of: showBorder) { _ in
+                        flag.displayBorder(value: showBorder)
+                    }
                 
                 Spacer()
             }
             .frame(maxWidth: .infinity)
-            .background(grayColor)
+            .background(Color("Color_Background"))
             .padding(.top, 40)
         }
         .frame(maxWidth: .infinity)
@@ -41,15 +48,19 @@ struct ContentView: View {
         Text(text)
             .font(.title3)
             .fontWeight(.bold)
-            .foregroundColor(.white)
+            .foregroundColor(Color("Color_Text"))
             .frame(maxWidth: .infinity)
             .frame(height: 60)
             .background(color)
     }
     
     var flagView: some View {
-        return FlagSectionView(section: flag.root)
-            .frame(width: 200, height: 125)
+        if let flagRoot = flag.root {
+            return AnyView(FlagView(section: flagRoot)
+                .frame(width: 200, height: 125))
+        } else {
+            return AnyView(EmptyView())
+        }
     }
     
     var firstComponent: some View {
@@ -79,20 +90,43 @@ struct ContentView: View {
             .padding()
             .frame(width: 150)
             .background(.white)
+            .foregroundColor(Color("Color_Gray"))
             .cornerRadius(cornerRadiusCustom)
             .buttonStyle(.plain)
     }
     
+    var toggleButton: some View {
+        Toggle("Show border", isOn: $showBorder)
+            .padding()
+            .frame(width: 200)
+            .background(.white)
+            .foregroundColor(Color("Color_Gray"))
+            .cornerRadius(cornerRadiusCustom)
+    }
+    
+    var saveImageButton: some View {
+        roundedCornersButton("Save flag", Color("Color_Indigo")) {
+            print("Hello")
+            let image = flagView
+                .ignoresSafeArea()
+                .snapshot()
+            
+            imageSaver.writeToPhotoAlbum(image: image)
+        }
+        .alert(isPresented: $imageSaver.isSaved) {
+            Alert(title: Text("Your Flag was saved in Photo Album!"), message: Text("You can continue to create your flag."))
+        }
+    }
+    
     var addStripeButton: some View {
-        roundedCornersButton("Add Stripe", greenColor) {
+        roundedCornersButton("Add Stripe",  Color("Color_Green")) {
             flag.addStripe(color: bgColor)
         }
     }
     
     var commitButton: some View {
-        roundedCornersButton("Commit", blueColor) {
+        roundedCornersButton("Commit", Color("Color_Blue")) {
             flag.commit()
-            print("Am ajuns aici")
         }
     }
     
@@ -100,7 +134,7 @@ struct ContentView: View {
         Text("ADD SUBSECTION")
             .fontWeight(.heavy)
             .font(.system(size: 11))
-            .foregroundColor(blueColor)
+            .foregroundColor(Color("Color_Blue"))
             .padding()
             .frame(width: 200, height: 25)
     }
@@ -120,7 +154,7 @@ struct ContentView: View {
         Button {
             flag.addSubsection(orientation: .horizontal)
         } label: {
-            addImage("H-Split")
+            addImage("Split_Horizontal")
         }
         .frame(width: 150.0, height: 50.0)
     }
@@ -129,7 +163,7 @@ struct ContentView: View {
         Button {
             flag.addSubsection(orientation: .vertical)
         } label: {
-            addImage("V-Split")
+            addImage("Split_Vertical")
         }
         .frame(width: 150.0, height: 50.0)
     }
@@ -138,12 +172,10 @@ struct ContentView: View {
         Image(name)
             .resizable()
             .renderingMode(.original)
-            .foregroundColor(blueColor)
+            .foregroundColor(Color("Color_Blue"))
             .frame(width: 30, height: 30)
     }
 }
-
-
 
 
 struct ContentView_Previews: PreviewProvider {
