@@ -22,20 +22,21 @@ class FlagViewModel: ObservableObject {
         self.objectWillChange.send()
     }
     
-    func addSubsection(orientation: Orientation) {
+    func addSubsection(orientation: Orientation, value: Bool) {
         let newStackSection = FlagStackSection(orientation: orientation, subsections: [])
-        addSection(newStackSection)
+        addSection(newStackSection, value)
     }
     
-    func addStripe(color: Color) {
+    func addStripe(color: Color, value: Bool) {
         let newColorSection = FlagColorSection(color: color)
-        addSection(newColorSection)
+        addSection(newColorSection, value)
     }
     
-    func addSection(_ section: Section) {
+    func addSection(_ section: Section, _ value: Bool) {
         if let currentStackSection = currentSection as? FlagStackSection { // check if the currentSection is a Stack
             currentStackSection.subsections.append(section)
             section.parent = currentStackSection
+            print("value : \(value)")
             if let stackSection = section as? FlagStackSection { // check if the section we are adding is a Stack
                 currentStackSection.isBordered = false
                 stackSection.isBordered = true
@@ -46,16 +47,24 @@ class FlagViewModel: ObservableObject {
             print("Can not add new section to a color section!")
         } else { // we have no current section and no root so we set them
             section.isBordered = true
+            section.isToggled = value
             root = section
             currentSection = root
             self.objectWillChange.send()
         }
     }
     
-    func commit() {
+    func commit(value: Bool) {
         currentSection?.isBordered = false
         currentSection = currentSection?.parent ?? root
         currentSection?.isBordered = true
+        currentSection?.isToggled = value
+        self.objectWillChange.send()
+    }
+    
+    func deleteFlag() {
+        root = nil
+        currentSection = nil
         self.objectWillChange.send()
     }
 }

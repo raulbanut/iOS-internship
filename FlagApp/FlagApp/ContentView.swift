@@ -27,15 +27,20 @@ struct ContentView: View {
                 
                 addStripeButton
                 commitButton
-                colorPickerButton
-                saveImageButton
-                
-                toggleButton
-                    .onChange(of: showBorder) { _ in
-                        flag.displayBorder(value: showBorder)
-                    }
-                
+                HStack {
+                    colorPickerButton
+                    toggleButton
+                        .onChange(of: showBorder) { _ in
+                            flag.displayBorder(value: showBorder)
+                        }
+                }
                 Spacer()
+                HStack {
+                    deleteButton
+                    Spacer()
+                    saveImageButton
+                }
+                
             }
             .frame(maxWidth: .infinity)
             .background(Color("Color_Background"))
@@ -81,7 +86,7 @@ struct ContentView: View {
         .frame(maxWidth: .infinity)
         .background(.white)
         .cornerRadius(cornerRadiusCustom)
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 30)
         .buttonStyle(.plain)
     }
     
@@ -105,7 +110,7 @@ struct ContentView: View {
     }
     
     var saveImageButton: some View {
-        roundedCornersButton("Save flag", Color("Color_Indigo")) {
+        roundedCornersButton("Save Flag", Color("Color_Indigo")) {
             print("Hello")
             let image = flagView
                 .ignoresSafeArea()
@@ -120,14 +125,21 @@ struct ContentView: View {
     
     var addStripeButton: some View {
         roundedCornersButton("Add Stripe",  Color("Color_Green")) {
-            flag.addStripe(color: bgColor)
+            flag.addStripe(color: bgColor, value: showBorder)
         }
     }
     
     var commitButton: some View {
         roundedCornersButton("Commit", Color("Color_Blue")) {
-            flag.commit()
+            flag.commit(value: showBorder)
         }
+    }
+    
+    var deleteButton: some View {
+        roundedCornersButton("Delete", Color.red) {
+            flag.deleteFlag()
+        }
+        .frame(width: 150, height: 50)
     }
     
     var firstComponentText: some View {
@@ -152,7 +164,7 @@ struct ContentView: View {
     
     func horizontalSectionButton() -> some View {
         Button {
-            flag.addSubsection(orientation: .horizontal)
+            flag.addSubsection(orientation: .horizontal, value: showBorder)
         } label: {
             addImage("Split_Horizontal")
         }
@@ -161,7 +173,7 @@ struct ContentView: View {
     
     func verticalSectionButton() -> some View {
         Button {
-            flag.addSubsection(orientation: .vertical)
+            flag.addSubsection(orientation: .vertical, value: showBorder)
         } label: {
             addImage("Split_Vertical")
         }
